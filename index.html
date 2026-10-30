@@ -1,0 +1,432 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Harrison Keen — Actor</title>
+<meta name="description" content="Harrison Keen, actor. Looks, showreel and credits.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..800;1,6..96,400..700&family=Hanken+Grotesk:wght@400..600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --night: #0b0b0b;      /* sampled from the hero photo's backdrop: hero, reel, footer */
+    --paper: #f3f4f5;      /* cold white: looks, credits */
+    --white: #f6f6f4;      /* text on night */
+    --silver: #a3a6aa;     /* secondary text on night */
+    --graphite: #55585c;   /* secondary text on paper */
+    --gutter: clamp(16px, 4.5vw, 64px);
+    --serif: 'Bodoni Moda', 'Didot', serif;
+    --sans: 'Hanken Grotesk', system-ui, sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  html, body { overflow-x: clip; }
+  body { margin: 0; background: var(--night); color: var(--white); font: 400 17px/1.6 var(--sans); -webkit-font-smoothing: antialiased; }
+  /* every Bodoni setting keeps a low optical size, so hairlines never go thread-thin */
+  /* (the font shorthand resets this property, hence !important) */
+  * { font-variation-settings: 'opsz' 14 !important; }
+  .sec-title, .name, .footer h2 { font-variation-settings: 'opsz' 9 !important; }
+  img { display: block; max-width: 100%; }
+  a { color: inherit; }
+  button { font: inherit; color: inherit; }
+  :focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+  .wrap { width: 100%; max-width: 1440px; margin: 0 auto; padding: 0 var(--gutter); }
+
+  /* Sections: looks and credits are paper, the reel is night */
+  main > section { --bg: var(--night); --fg: var(--white); --mute: var(--silver); --line: rgba(255,255,255,.22);
+    background: var(--bg); color: var(--fg); padding: clamp(72px, 10vw, 140px) 0; position: relative; }
+  .looks, .credits-sec { --bg: var(--paper); --fg: var(--night); --mute: var(--graphite); --line: rgba(0,0,0,.2); }
+
+  /* display type: Bodoni with its optical size pinned low so the hairlines stay sturdy */
+  .sec-title { font: 600 clamp(52px, 8vw, 116px)/.9 var(--serif); font-variation-settings: 'opsz' 9; letter-spacing: -.02em; margin: 0 0 clamp(32px, 4vw, 56px); }
+
+  /* ---------- Hero: the cover ---------- */
+  .hero { position: relative; height: 100svh; min-height: 560px; overflow: hidden; background: linear-gradient(#0c0c0c, #050505); isolation: isolate; }
+  .hero-photo { position: absolute; z-index: 1; aspect-ratio: 900 / 1371; transform-origin: 56% 30%;
+    --fade: linear-gradient(to right, transparent, #000 22%, #000 80%, transparent), linear-gradient(to bottom, #000 68%, transparent);
+    -webkit-mask-image: var(--fade); mask-image: var(--fade); -webkit-mask-composite: source-in; mask-composite: intersect; }
+  .hero-photo img { width: 100%; height: 100%; }
+  .hero-photo.cut { z-index: 3; pointer-events: none; }
+  .name { position: absolute; z-index: 2; margin: 0; left: var(--gutter); right: var(--gutter); top: 0;
+    font: 700 100px/.8 var(--serif); font-variation-settings: 'opsz' 9; letter-spacing: -.035em; text-transform: uppercase; white-space: nowrap; color: var(--white); }
+  .name .fit { display: inline-block; }
+  .name .line { display: inline-block; overflow: hidden; padding: .04em 0 .02em; vertical-align: top; }
+  .name .line > span { display: inline-block; }
+  .hero.stacked .name .line { display: block; }
+  .hero.stacked .name .line + .line { margin-top: -.02em; }
+
+  .cover-lines { position: absolute; z-index: 4; left: var(--gutter); bottom: clamp(24px, 5vh, 48px); margin: 0; padding: 0; list-style: none;
+    display: grid; gap: 14px; max-width: 280px; font-size: 15px; line-height: 1.35; color: var(--silver); }
+  .cover-lines b { display: block; font: italic 500 23px/1.1 var(--serif); color: var(--white); }
+
+  /* the one orchestrated moment: masthead rises out of its line, the photo settles */
+  @media (prefers-reduced-motion: no-preference) {
+    .name .line > span { animation: rise 1.1s cubic-bezier(.2,.7,.1,1) both; }
+    .name .line + .line > span { animation-delay: .12s; }
+    .hero-photo { animation: settle 2.2s cubic-bezier(.2,.7,.1,1) both; }
+    .cover-lines { animation: fade .9s 1s both; }
+  }
+  @keyframes rise { from { transform: translateY(105%); } }
+  @keyframes settle { from { transform: scale(1.07); opacity: 0; } 30% { opacity: 1; } }
+  @keyframes fade { from { opacity: 0; } }
+
+  /* ---------- Looks ---------- */
+  .look { margin: 0; }
+  .look button { display: block; width: 100%; padding: 0; border: 0; background: none; cursor: pointer; position: relative; text-align: left; }
+  .look img { width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; background: #ccc; }
+  .look figcaption { pointer-events: none; }
+  .look figcaption b { font: italic 500 17px/1 var(--serif); }
+
+  /* Slices: twelve narrow strips; the one you point at opens out to full width. */
+  .looks-list { display: flex; gap: 6px; height: min(76vh, 760px); }
+  .looks-list .look { position: relative; flex: 1 1 0; min-width: 0; transition: flex-grow .7s cubic-bezier(.2,.7,.1,1); }
+  .looks-list .look.is-active { flex-grow: 9; }
+  .looks-list .look button { height: 100%; overflow: hidden; }
+  .looks-list .look img { height: 100%; aspect-ratio: auto; object-position: 50% 25%; }
+  .looks-list .look figcaption { position: absolute; left: 0; right: 0; bottom: 0; padding: 48px 20px 18px; color: #fff; white-space: nowrap;
+    background: linear-gradient(transparent, rgba(0,0,0,.6)); opacity: 0; transition: opacity .3s; display: flex; gap: 12px; align-items: baseline; }
+  .looks-list .look.is-active figcaption { opacity: 1; transition-delay: .35s; }
+  .looks-list .look figcaption span { font: 500 26px/1.1 var(--serif); }
+  .looks-list .look.is-active button { cursor: zoom-in; }
+  @media (max-width: 760px) {
+    .looks-list { flex-direction: column; height: auto; }
+    .looks-list .look { flex: none; height: 52px; transition: height .6s cubic-bezier(.2,.7,.1,1); }
+    .looks-list .look.is-active { height: min(110vw, 70vh); }
+  }
+
+  /* ---------- Reel: campaign film ----------
+     The showreel plays silently behind the whole section, like a fashion house's campaign; two
+     buttons open either video with sound in a dark theatre, each at its own shape (the showreel
+     is 16:9, the villain clips 9:16). The players live in .reel-items and move into the theatre. */
+  .reel { padding: 0 !important; min-height: 100svh; display: grid; align-items: center; overflow: hidden; }
+  .reel-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: brightness(.42) grayscale(.2); }
+  .reel .wrap { position: relative; z-index: 1; text-align: center; padding-top: 80px; padding-bottom: 80px; }
+  .reel .sec-title { font-size: clamp(84px, 15vw, 230px); }
+  .reel-items { display: none; }
+  .reel-frame { position: relative; overflow: hidden; background: #000; }
+  .reel-frame video { width: 100%; height: 100%; display: block; object-fit: contain; }
+  .ring { display: grid; place-items: center; width: 46px; aspect-ratio: 1; border-radius: 50%; border: 1px solid currentColor; }
+  .ring svg { width: 12px; margin-left: 2px; }
+  .pick-title { font: italic 500 26px/1.1 var(--serif); }
+  .reel-cta { display: flex; justify-content: center; flex-wrap: wrap; gap: 16px; }
+  .reel-cta button { display: flex; align-items: center; gap: 14px; padding: 12px 26px 12px 12px; border: 1px solid rgba(255,255,255,.75); background: rgba(11,11,11,.35);
+    backdrop-filter: blur(6px); color: #fff; cursor: pointer; text-align: left; transition: background .25s, color .25s; width: min(100%, 350px); }
+  .reel-cta button:hover { background: #fff; color: #000; }
+  .reel-cta small { display: block; font-size: 14px; color: rgba(255,255,255,.75); }
+  .reel-cta button:hover small { color: #444; }
+  .theatre { padding: 0; border: 0; background: transparent; width: 100vw; height: 100vh; max-width: 100vw; max-height: 100vh; }
+  .theatre::backdrop { background: rgba(5,5,5,.97); }
+  .theatre[open] { display: grid; place-items: center; }
+  .theatre-close { position: absolute; top: 12px; right: 16px; border: 0; background: none; color: #fff; font: 300 44px/1 var(--sans); cursor: pointer; padding: 8px 14px; }
+
+  /* ---------- Credits: masthead. Each type is one centred paragraph, set like a magazine's staff box. ---------- */
+  .credits-src { display: none; }
+  #credits-title { text-align: center; }
+  .cred-masthead { max-width: 900px; margin: 0 auto; padding-bottom: 28px; border-bottom: 1px solid var(--fg); text-align: center; }
+  .cred-masthead h3 { font: italic 500 24px/1.2 var(--serif); margin: 0 0 12px; }
+  .cred-masthead .grp + .grp { margin-top: 34px; padding-top: 30px; border-top: 1px solid var(--line); }
+  .cred-masthead p { margin: 0; font-size: 17px; line-height: 1.85; text-wrap: balance; }
+  .cred-masthead .it { display: inline-block; margin: 0 .75em; }
+  .cred-masthead .it b { font-weight: 600; }
+  .cred-masthead .it i { font-style: normal; color: var(--mute); }
+  @media (max-width: 600px) { .cred-masthead p { line-height: 1.4; } .cred-masthead .it { display: block; margin: 0 0 12px; } }
+
+  /* ---------- Footer ---------- */
+  .footer { background: var(--night); padding: clamp(80px, 11vw, 150px) 0 32px; }
+  .footer h2 { font: 600 clamp(48px, 9.4vw, 150px)/.9 var(--serif); font-variation-settings: 'opsz' 9; letter-spacing: -.02em; margin: 0 0 clamp(40px, 6vw, 72px); }
+  .foot-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 32px; padding-top: 28px; border-top: 1px solid rgba(255,255,255,.22); }
+  .footer h3 { font: 500 15px/1.3 var(--sans); color: var(--silver); margin: 0 0 8px; }
+  .footer p, .footer ul { margin: 0; padding: 0; list-style: none; }
+  .footer a { text-decoration: none; }
+  .footer a:hover { text-decoration: underline; text-underline-offset: 4px; }
+  .email { font: italic 500 clamp(22px, 2.4vw, 32px)/1.2 var(--serif); display: inline-block; margin-bottom: 20px; }
+  .btn { display: inline-flex; align-items: center; gap: 10px; padding: 13px 24px; border: 1px solid var(--white); font-weight: 500; transition: background .25s, color .25s; }
+  .footer .btn:hover { background: var(--white); color: var(--night); text-decoration: none; }
+  .colophon { margin-top: 72px !important; font-size: 14px; color: var(--silver); }
+  @media (max-width: 760px) { .foot-grid { grid-template-columns: 1fr 1fr; } .foot-grid > :first-child { grid-column: 1 / -1; } }
+
+  /* ---------- Lightbox ---------- */
+  .lightbox { padding: 0; border: 0; background: transparent; max-width: 100vw; max-height: 100vh; width: 100vw; height: 100vh; }
+  .lightbox::backdrop { background: rgba(5,5,5,.96); }
+  .lightbox img { width: 100%; height: 100%; object-fit: contain; padding: 56px 72px; }
+  .lightbox button { position: absolute; border: 0; background: none; color: #fff; font: 300 44px/1 var(--sans); cursor: pointer; padding: 12px 18px; }
+  .lightbox .prev { left: 4px; top: 50%; translate: 0 -50%; } .lightbox .next { right: 4px; top: 50%; translate: 0 -50%; }
+  .lightbox-close { top: 8px; right: 8px; }
+
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition-duration: 0s !important; } }
+
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-photo bg"><img src="assets/photos/mrc8528.jpg" alt="Harrison Keen, black and white portrait, hands clasped under his chin" width="900" height="1371" fetchpriority="high"></div>
+  <h1 class="name"><span class="fit"><span class="line"><span>Harrison</span></span> <span class="line"><span>Keen</span></span></span></h1>
+  <!-- The same photo with the backdrop removed, laid over the name so the head sits in front of it.
+       Per client: cut their hero shot out once (rembg isnet-general-use) and save it beside the original. -->
+  <div class="hero-photo cut" aria-hidden="true"><img src="assets/photos/mrc8528-cut.webp" alt="" width="900" height="1371"></div>
+  <ul class="cover-lines">
+    <li><b>Algorithm</b>Danny Streeter in the feature film, 2026</li>
+    <li><b>Super Godfather 2</b>Felix Thorne, vertical drama</li>
+    <li><b>Sons of Sun</b>Four rock-and-roll legends on stage</li>
+  </ul>
+</header>
+
+<main>
+
+  <section class="looks" id="looks" aria-labelledby="looks-title">
+    <div class="wrap">
+      <h2 class="sec-title" id="looks-title">Looks</h2>
+      <div class="looks-body">
+        <div class="looks-list">
+          <figure class="look"><button type="button"><img src="assets/photos/img_1949.jpg" alt="Black and white still in an open-collared suit" loading="lazy" width="900" height="1350"></button><figcaption><b>Look 1</b><span>Open collar</span></figcaption></figure>
+          <figure class="look"><button type="button"><img src="assets/photos/hero-harrison-keen-2.jpg" alt="Headshot in a grey suit and tie" loading="lazy" width="720" height="900"></button><figcaption><b>Look 2</b><span>Grey suit, black tie</span></figcaption></figure>
+          <figure class="look"><button type="button"><img src="assets/photos/harrison-keen-4.jpg" alt="Moody headshot in a black jacket" loading="lazy" width="900" height="1125"></button><figcaption><b>Look 3</b><span>Black jacket</span></figcaption></figure>
+          <figure class="look"><button type="button"><img src="assets/photos/img_1941.jpg" alt="Film still in a dim bar" loading="lazy" width="900" height="1350"></button><figcaption><b>Look 4</b><span>After hours</span></figcaption></figure>
+          <figure class="look"><button type="button"><img src="assets/photos/harrison-keen-3.jpg" alt="Headshot in a brown leather jacket" loading="lazy" width="900" height="1125"></button><figcaption><b>Look 5</b><span>Brown leather</span></figcaption></figure>
+          <figure class="look"><button type="button"><img src="assets/photos/scaleddown.jpg" alt="Period costume still with flat cap and braces" loading="lazy" width="900" height="1382"></button><figcaption><b>Look 6</b><span>Period, flat cap</span></figcaption></figure>
+          <figure class="look"><button type="button"><img src="assets/photos/harrison-keen-1.jpg" alt="Headshot in a dark knit on green" loading="lazy" width="900" height="1125"></button><figcaption><b>Look 7</b><span>Dark knit</span></figcaption></figure>
+          <figure class="look"><button type="button"><img src="assets/photos/dsc07561.jpg" alt="Stage still in a gold shirt" loading="lazy" width="900" height="1350"></button><figcaption><b>Look 8</b><span>Gold shirt, on stage</span></figcaption></figure>
+          <figure class="look"><button type="button"><img src="assets/photos/img_1783_cropped.jpg" alt="Film still in an orange prison jumpsuit" loading="lazy" width="900" height="1351"></button><figcaption><b>Look 9</b><span>Prison orange</span></figcaption></figure>
+          <figure class="look"><button type="button"><img src="assets/photos/harrison-457.jpg" alt="Laughing headshot on red" loading="lazy" width="900" height="1125"></button><figcaption><b>Look 10</b><span>Open laugh</span></figcaption></figure>
+          <figure class="look"><button type="button"><img src="assets/photos/hero-harrison-keen-5.jpg" alt="Smiling headshot on green" loading="lazy" width="720" height="900"></button><figcaption><b>Look 11</b><span>Easy smile</span></figcaption></figure>
+          <figure class="look"><button type="button"><img src="assets/photos/dsc08433.jpg" alt="Stage still, an intimate scene" loading="lazy" width="900" height="1350"></button><figcaption><b>Look 12</b><span>Patterned silk, on stage</span></figcaption></figure>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="reel" id="reel" aria-labelledby="reel-title">
+    <!-- the showreel, muted, looping behind the section while it's on screen -->
+    <video class="reel-bg" muted loop playsinline preload="none" disablepictureinpicture aria-hidden="true"
+           poster="assets/photos/showreel-poster.jpg" src="assets/video/Showreel_HarrisonKeen.mp4"></video>
+    <div class="wrap">
+      <h2 class="sec-title" id="reel-title">Reel</h2>
+      <div class="reel-items">
+          <figure class="reel-item" data-ratio="1.7778">
+            <div class="reel-frame">
+              <video playsinline preload="none" disablepictureinpicture poster="assets/photos/showreel-poster.jpg" src="assets/video/Showreel_HarrisonKeen.mp4"></video>
+            </div>
+          </figure>
+          <figure class="reel-item" data-ratio="0.5620">
+            <div class="reel-frame">
+              <video playsinline preload="none" disablepictureinpicture poster="assets/video/villain-clips.jpg" src="assets/video/villain-clips.mp4"></video>
+            </div>
+          </figure>
+      </div>
+      <div class="reel-cta">
+        <button type="button" data-k="0"><span class="ring"><svg viewBox="0 0 10 12" aria-hidden="true"><path d="M0 0 L10 6 L0 12 Z" fill="currentColor"/></svg></span><span><span class="pick-title">Watch the showreel</span><small>Selected scenes, 1:52</small></span></button>
+        <button type="button" data-k="1"><span class="ring"><svg viewBox="0 0 10 12" aria-hidden="true"><path d="M0 0 L10 6 L0 12 Z" fill="currentColor"/></svg></span><span><span class="pick-title">Watch villain scenes</span><small>Darker roles, 1:41</small></span></button>
+      </div>
+    </div>
+  </section>
+
+  <section class="credits-sec" id="credits" aria-labelledby="credits-title">
+    <div class="wrap">
+      <h2 class="sec-title" id="credits-title">Credits</h2>
+      <!-- Source list: one row per credit, a new type wherever an h3 appears. The views below are built from it. -->
+      <div class="credits-src">
+        <div class="credit-keep"><h3>Feature film</h3><div class="credit"><span class="credit-title">Algorithm</span><span class="credit-role">Danny Streeter</span><span class="credit-year">2026</span></div></div>
+        <div class="credit-keep"><h3>Vertical drama</h3><div class="credit"><span class="credit-title">Super Godfather 2</span><span class="credit-role">Felix Thorne</span><span class="credit-year">2026</span></div></div>
+        <div class="credit"><span class="credit-title">Black Ties and White Lies</span><span class="credit-role">Brandon Harrington</span><span class="credit-year">2026</span></div>
+        <div class="credit"><span class="credit-title">The Duel</span><span class="credit-role">Harrison</span><span class="credit-year">2026</span></div>
+        <div class="credit"><span class="credit-title">Superstar</span><span class="credit-role">Aaron Myers</span><span class="credit-year">2026</span></div>
+        <div class="credit"><span class="credit-title">Reborn at 18: The Great Grandma Takes Charge</span><span class="credit-role">Ryan Ashford</span><span class="credit-year">2026</span></div>
+        <div class="credit"><span class="credit-title">Take Back My Billionaire Stolen By Bestie</span><span class="credit-role">Jack</span><span class="credit-year">2026</span></div>
+        <div class="credit"><span class="credit-title">Poolwatch</span><span class="credit-role">Anthony's Man-Crush</span><span class="credit-year">2026</span></div>
+        <div class="credit"><span class="credit-title">The Summer I Turned Bad</span><span class="credit-role">Dale</span><span class="credit-year">2025</span></div>
+        <div class="credit"><span class="credit-title">Runaway Prince's Secret Vacation</span><span class="credit-role">Benji</span><span class="credit-year">2025</span></div>
+        <div class="credit"><span class="credit-title">Heiress Returns Boss's Defense and Love</span><span class="credit-role">Daniel Roth</span><span class="credit-year">2025</span></div>
+        <div class="credit"><span class="credit-title">Flash Marriage to My Billionaire Hobo Hubby</span><span class="credit-role">Mike</span><span class="credit-year">2025</span></div>
+        <div class="credit"><span class="credit-title">Reborn to Find I Am the Mogul's Lost Love</span><span class="credit-role">Jimmy Dupont</span><span class="credit-year">2025</span></div>
+        <div class="credit"><span class="credit-title">The Mafia's Unwanted Blind Savior</span><span class="credit-role">Zed</span><span class="credit-year">2025</span></div>
+        <div class="credit"><span class="credit-title">The Heiress Blacklisted Her Husband</span><span class="credit-role">Thomas Wilson</span><span class="credit-year">2024</span></div>
+        <div class="credit"><span class="credit-title">Daddy's Best Friend Made Me His Billion Dollar Wife</span><span class="credit-role">Michael Lambert</span><span class="credit-year">2024</span></div>
+        <div class="credit"><span class="credit-title">Contract Marriage Before Election</span><span class="credit-role">Elliot Hill</span><span class="credit-year">2024</span></div>
+        <div class="credit-keep"><h3>Short film</h3><div class="credit"><span class="credit-title">Viveza Criolla</span><span class="credit-role">George</span><span class="credit-year">2026</span></div></div>
+        <div class="credit"><span class="credit-title">Sambar Pot Pie</span><span class="credit-role">David</span><span class="credit-year">2026</span></div>
+        <div class="credit"><span class="credit-title">Off Book</span><span class="credit-role">Derek Hughes</span><span class="credit-year">2026</span></div>
+        <div class="credit"><span class="credit-title">The Girl Who Drew Stars</span><span class="credit-role">Lead</span><span class="credit-year">2026</span></div>
+        <div class="credit"><span class="credit-title">Standing 8</span><span class="credit-role">Caleb</span><span class="credit-year">2026</span></div>
+        <div class="credit"><span class="credit-title">Red Eye</span><span class="credit-role">Andres</span><span class="credit-year">2026</span></div>
+        <div class="credit"><span class="credit-title">Happy Hour</span><span class="credit-role">The Robber</span><span class="credit-year">2025</span></div>
+        <div class="credit"><span class="credit-title">The One Left Behind</span><span class="credit-role">Charlie</span><span class="credit-year">2025</span></div>
+        <div class="credit"><span class="credit-title">The Return</span><span class="credit-role">Edward</span><span class="credit-year">2025</span></div>
+        <div class="credit"><span class="credit-title">Rush Helm</span><span class="credit-role">Ross / Narrator</span><span class="credit-year">2025</span></div>
+        <div class="credit"><span class="credit-title">The Bystander Effect</span><span class="credit-role">Clyde</span><span class="credit-year">2023</span></div>
+        <div class="credit"><span class="credit-title">The Barber</span><span class="credit-role">Employee (Monster)</span><span class="credit-year">2023</span></div>
+        <div class="credit-keep"><h3>Web series</h3><div class="credit"><span class="credit-title">Chai Tea</span><span class="credit-role">Blake Owens</span><span class="credit-year">2026</span></div></div>
+        <div class="credit-keep"><h3>Voice</h3><div class="credit"><span class="credit-title">Stranger Cases</span><span class="credit-role">Agent Ethan Hayes</span><span class="credit-year">2025&ndash;26</span></div></div>
+        <div class="credit"><span class="credit-title">Welcome to Fosters (Neon Inkwell Collection)</span><span class="credit-role">Mark</span><span class="credit-year">2024</span></div>
+        <div class="credit-keep"><h3>Commercial</h3><div class="credit"><span class="credit-title">SERVD Cards Social Media Campaign</span><span class="credit-role">Boyfriend</span><span class="credit-year">2025</span></div></div>
+        <div class="credit"><span class="credit-title">Esky Promotion</span><span class="credit-role">Male Character</span><span class="credit-year">2025</span></div>
+        <div class="credit"><span class="credit-title">WD-40 No Vac Promotion</span><span class="credit-role">Male Character</span><span class="credit-year">2025</span></div>
+        <div class="credit"><span class="credit-title">eBay &times; TikTok &lsquo;Seen It All&rsquo; Campaign</span><span class="credit-role">Charlie</span><span class="credit-year">2024</span></div>
+        <div class="credit"><span class="credit-title">Finder &lsquo;Uhhh-Huh!&rsquo; Sea Urchin Ad</span><span class="credit-role">Jacob</span><span class="credit-year">2024</span></div>
+        <div class="credit"><span class="credit-title">Cochlear Odyssey</span><span class="credit-role">Graduating Grandson</span><span class="credit-year">2024</span></div>
+        <div class="credit-keep"><h3>Music video</h3><div class="credit"><span class="credit-title">Rolling Home</span><span class="credit-role">Lead</span><span class="credit-year">2026</span></div></div>
+        <div class="credit-keep"><h3>Theatre</h3><div class="credit"><span class="credit-title">Sons of Sun</span><span class="credit-role">Elvis Presley, Johnny Cash, Carl Perkins &amp; Jerry Lee Lewis</span><span class="credit-year">2024&ndash;25</span></div></div>
+        <div class="credit"><span class="credit-title">Mystery of the Blue Bloodhound</span><span class="credit-role">Mark Barrens</span><span class="credit-year">2023</span></div>
+        <div class="credit"><span class="credit-title">Murder by Invitation</span><span class="credit-role">Mr Dawes</span><span class="credit-year">2023</span></div>
+      </div>
+      <div class="cred-masthead"></div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer" id="contact">
+  <div class="wrap">
+    <h2>Casting &amp; bookings</h2>
+    <div class="foot-grid">
+      <div>
+        <a class="email" href="mailto:keen_ha@outlook.com">keen_ha@outlook.com</a><br>
+        <a class="btn" href="assets/HarrisonKeen_ActingCV.pdf" download>Download CV</a>
+      </div>
+      <div>
+        <h3>Representation</h3>
+        <!-- Replace with the client's agent, or remove this column. -->
+        <p>Agency Name<br><a href="mailto:agent@example.com">agent@example.com</a></p>
+      </div>
+      <div>
+        <h3>Profiles</h3>
+        <ul>
+          <li><a href="https://www.imdb.com/name/nm15486957/" rel="noopener">IMDb</a></li>
+          <li><a href="https://www.instagram.com/harrison.keen/" rel="noopener">Instagram</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="colophon">© 2026 Harrison Keen</p>
+  </div>
+</footer>
+
+<dialog class="lightbox" aria-label="Photo viewer">
+  <img alt="">
+  <button class="prev" aria-label="Previous photo">‹</button>
+  <button class="next" aria-label="Next photo">›</button>
+  <button class="lightbox-close" aria-label="Close">×</button>
+</dialog>
+<dialog class="theatre" aria-label="Video player">
+  <button class="theatre-close" aria-label="Close video">×</button>
+</dialog>
+
+<script>
+  const root = document.documentElement;
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const el = (tag, className, ...kids) => { const e = document.createElement(tag); if (className) e.className = className; e.append(...kids); return e; };
+
+  // Hero: the name is fitted to the page width; the photo is placed so the head fills ~40%
+  // of the width and only the crown of the hair rises into the foot of the name.
+  const hero = document.querySelector('.hero');
+  const name = hero.querySelector('.name');
+  const fit = name.querySelector('.fit');
+  const lines = [...name.querySelectorAll('.line')];
+  const photos = [...hero.querySelectorAll('.hero-photo')];
+  function layoutHero() {
+    const vw = root.clientWidth, vh = hero.offsetHeight;
+    const gutter = Math.max(16, Math.min(vw * .045, 64));
+    const stack = vw < 700;
+    hero.classList.toggle('stacked', stack);
+    name.style.fontSize = '100px';
+    const w = stack ? Math.max(...lines.map(l => l.getBoundingClientRect().width)) : fit.getBoundingClientRect().width;
+    name.style.fontSize = 100 * (vw - 2 * gutter) / w + 'px';
+    const nameH = name.offsetHeight;
+    // photo: head is ~57% of the frame's width, its crown ~11% down, centred ~56% across
+    const pw = stack ? vw * 1.08 : Math.min(vw * .74, vh * 1.05);
+    const headX = stack ? vw * .52 : vw * .6;
+    const top = (stack ? nameH * .95 : nameH * .7) + 24 - pw * 1.523 * .11;
+    photos.forEach(p => Object.assign(p.style, { width: pw + 'px', left: (headX - pw * .56) + 'px', top: top + 'px' }));
+    name.style.top = '24px';
+  }
+  layoutHero();
+  document.fonts.ready.then(layoutHero);
+  addEventListener('resize', layoutHero);
+
+  // ---------- Looks: slices ----------
+  const looks = [...document.querySelectorAll('.look')];
+  const shots = looks.map(f => f.querySelector('img'));
+  let active = 0;
+  const setActive = i => { active = i; looks.forEach((f, k) => f.classList.toggle('is-active', k === i)); };
+  looks.forEach((f, i) => {
+    const b = f.querySelector('button');
+    b.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse') setActive(i); });
+    b.addEventListener('focus', () => setActive(i));
+    // first tap opens a slice, a tap on the open one shows it full size
+    b.addEventListener('click', () => active === i ? openBox(i) : setActive(i));
+  });
+  setActive(0);
+
+  // Lightbox
+  const box = document.querySelector('.lightbox');
+  const big = box.querySelector('img');
+  let at = 0;
+  const show = i => { at = (i + shots.length) % shots.length; big.src = shots[at].src; big.alt = shots[at].alt; };
+  function openBox(i) { show(i); box.showModal(); }
+  box.querySelector('.prev').addEventListener('click', () => show(at - 1));
+  box.querySelector('.next').addEventListener('click', () => show(at + 1));
+  box.querySelector('.lightbox-close').addEventListener('click', () => box.close());
+  box.addEventListener('click', e => { if (e.target === box) box.close(); });
+  box.addEventListener('keydown', e => {
+    if (e.key === 'ArrowLeft') show(at - 1);
+    if (e.key === 'ArrowRight') show(at + 1);
+  });
+
+  // ---------- Reel ----------
+  const reel = document.getElementById('reel');
+  const items = [...reel.querySelectorAll('.reel-item')];
+  const frames = items.map(i => i.querySelector('.reel-frame'));
+  const vids = items.map(i => i.querySelector('video'));
+  const ratios = items.map(i => +i.dataset.ratio);
+  const theatre = document.querySelector('.theatre');
+  const bg = reel.querySelector('.reel-bg');
+  // the theatre frame takes the chosen video's own shape, as large as the screen allows
+  function sizeTheatre() {
+    const f = theatre.querySelector('.reel-frame');
+    if (!f) return;
+    const r = ratios[frames.indexOf(f)], w = Math.min(innerWidth * .92, innerHeight * .84 * r);
+    f.style.width = w + 'px'; f.style.height = w / r + 'px';
+  }
+  reel.querySelectorAll('.reel-cta button').forEach(b => b.addEventListener('click', () => {
+    const k = +b.dataset.k;
+    bg.pause();
+    theatre.append(frames[k]);
+    theatre.showModal();
+    sizeTheatre();
+    vids[k].controls = true;
+    vids[k].play().catch(() => {});
+  }));
+  theatre.querySelector('.theatre-close').addEventListener('click', () => theatre.close());
+  theatre.addEventListener('click', e => { if (e.target === theatre) theatre.close(); });
+  theatre.addEventListener('close', () => {
+    const f = theatre.querySelector('.reel-frame'), k = frames.indexOf(f);
+    vids[k].pause();
+    items[k].prepend(f);
+    playBg();
+  });
+  addEventListener('resize', sizeTheatre);
+  // the campaign film only runs while the section is on screen, and never under reduced motion
+  let reelInView = false;
+  function playBg() {
+    if (reelInView && !reduced && !theatre.open) bg.play().catch(() => {});
+    else bg.pause();
+  }
+  new IntersectionObserver(([e]) => { reelInView = e.isIntersecting; playBg(); }).observe(reel);
+
+  // ---------- Credits: read once from the source list, then set as the masthead ----------
+  const groups = [];
+  document.querySelectorAll('.credits-src > div').forEach(r => {
+    const c = r.classList.contains('credit') ? r : r.querySelector('.credit');
+    if (r.classList.contains('credit-keep')) groups.push({ kind: r.querySelector('h3').textContent, items: [] });
+    groups.at(-1).items.push({ title: c.querySelector('.credit-title').textContent, role: c.querySelector('.credit-role').textContent, year: c.querySelector('.credit-year').textContent });
+  });
+  document.querySelector('.cred-masthead').replaceChildren(...groups.map(g => {
+    const p = el('p', '');
+    // each entry stays whole on its line; the spacing between entries does the separating
+    g.items.forEach(d => p.append(el('span', 'it', el('b', '', d.title), ` as ${d.role} `, el('i', '', d.year)), ' '));
+    return el('div', 'grp', el('h3', '', g.kind), p);
+  }));
+</script>
+</body>
+</html>
